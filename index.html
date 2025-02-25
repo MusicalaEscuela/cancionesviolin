@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Musicala - Canciones para Violín</title>
+    <title>Musicala - Repertorio para Volín</title>
     <style>
         /* Estilos generales */
         body {
@@ -24,27 +24,31 @@
             text-align: left;
         }
 
-        /* Encabezado con logo */
+        /* Header con flexbox */
         header {
-            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             background-color: #ffffff;
             padding: 10px 20px;
             border-bottom: 2px solid #ddd;
+            flex-wrap: wrap; /* Permite que los elementos bajen si no hay espacio */
         }
 
-        header img {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            max-width: 120px;
-            height: auto;
-        }
-
+        /* Centrar el título */
         header h1 {
             font-size: 36px;
             color: #333333;
             margin: 0;
             text-align: center;
+            flex: 1;
+        }
+
+        /* Logo */
+        header img {
+            max-width: 120px;
+            height: auto;
+            margin-left: 10px;
         }
 
         /* Estilos para el campo de búsqueda y selector */
@@ -66,6 +70,11 @@
         }
 
         /* Estilos de la tabla */
+        .table-wrapper {
+            overflow-x: auto;
+            width: 100%;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -74,6 +83,7 @@
             border-radius: 10px;
             overflow: hidden;
             table-layout: auto;
+            min-width: 600px; /* Asegura que no se comprima demasiado */
         }
 
         th, td {
@@ -110,6 +120,50 @@
         footer p {
             margin: 5px 0;
         }
+
+        /* Media Queries para dispositivos móviles */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            header h1 {
+                font-size: 24px;
+                text-align: center;
+                flex: 100%;
+            }
+
+            header img {
+                margin: 10px auto;
+            }
+
+            .filters {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            #searchInput, #columnSelect {
+                width: 90%;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            /* Tabla scrollable */
+            .table-wrapper {
+                overflow-x: auto;
+                width: 100%;
+            }
+
+            table {
+                width: 100%;
+                min-width: 600px;
+                border-collapse: collapse;
+            }
+        }
     </style>
 </head>
 <body>
@@ -126,26 +180,24 @@
         <div class="filters">
             <input type="text" id="searchInput" placeholder="Buscar en la tabla...">
             <div>
-                <label for="columnSelect">Seleccionar formato:</label>
+                <label for="columnSelect">Seleccionar columna adicional:</label>
                 <select id="columnSelect">
-                    <option value="G">Notación numérica I</option>
-                    <option value="H">Notación numérica II</option>
-                    <option value="I">Notas</option>
-                    <option value="J">Partitura I</option>
-                    <option value="K">Partitura II</option>
-                    <option value="L">Partitura III</option>
-                    <option value="M">Audio</option>
+                    <option value="F">Números</option>
+                    <option value="G">Notas</option>
+                    <option value="H">Partitura</option>
                 </select>
             </div>
         </div>
 
-        <!-- Tabla -->
-        <table id="csvTable">
-            <thead>
-                <tr id="headerRow"></tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
+        <!-- Tabla dentro de un wrapper para scroll -->
+        <div class="table-wrapper">
+            <table id="csvTable">
+                <thead>
+                    <tr id="headerRow"></tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Pie de página -->
@@ -153,6 +205,7 @@
         <p>© 2025 Musicala. Todos los derechos reservados.</p>
     </footer>
 
+    <!-- Script para cargar CSV -->
     <script>
         async function cargarCSV() {
             const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTU3F5BzPMQl8HlmVekRHQ4LI36mZUxHJixkQvA0JAj_PJt_Ne0Hqa3AEUgzk-jeHfnj2OT_9yRJSAC/pub?output=csv";
@@ -163,8 +216,8 @@
             const headerRow = document.getElementById("headerRow");
             const tableBody = document.getElementById("tableBody");
 
-            const columnasFijas = 6;
-            const columnaInicial = 6;
+            const columnasFijas = 5;
+            const columnaInicial = 5;
 
             // Crear encabezados
             for (let i = 0; i < columnasFijas; i++) {
@@ -203,7 +256,7 @@
                 }
             }
 
-            // Inicializar tabla con columna G por defecto
+            // Inicializar tabla con columna F por defecto
             cargarFilas(columnaInicial);
 
             // Evento para cambiar columna
@@ -228,5 +281,6 @@
 
         cargarCSV();
     </script>
+
 </body>
 </html>
