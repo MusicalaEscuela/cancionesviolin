@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Musicala · Repertorio de Violín</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar__left">
+      <img src="logo.png" class="logo" alt="Musicala" />
+      <h1>Repertorio de Violín</h1>
+    </div>
+
+    <div class="topbar__right">
+      <button id="viewCardsBtn" class="seg active" type="button">🎵 Canciones</button>
+      <button id="viewTableBtn" class="seg" type="button">📋 Tabla</button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="controls">
+      <div class="search">
+        <input id="searchInput" type="text" placeholder="Busca canción, artista o género…" autocomplete="off" />
+        <button id="clearBtn" class="btn btn--ghost" type="button">Limpiar</button>
+      </div>
+
+      <div class="control">
+        <label for="guideSelect">Tipo de guía</label>
+        <select id="guideSelect">
+          <option value="F">Números</option>
+          <option value="G">Notas</option>
+          <option value="H">Partitura</option>
+        </select>
+      </div>
+
+      <div class="control">
+        <label for="levelMin">Nivel mínimo</label>
+        <select id="levelMin">
+          <option value="0">Cualquiera</option>
+          <option value="1">★</option>
+          <option value="2">★★</option>
+          <option value="3">★★★</option>
+          <option value="4">★★★★</option>
+          <option value="5">★★★★★</option>
+        </select>
+      </div>
+
+      <div class="control">
+        <label for="sortSelect">Orden</label>
+        <select id="sortSelect">
+          <option value="name-asc">Nombre A→Z</option>
+          <option value="name-desc">Nombre Z→A</option>
+          <option value="level-asc">Nivel ↑</option>
+          <option value="level-desc">Nivel ↓</option>
+          <option value="genre-asc">Género A→Z</option>
+        </select>
+      </div>
+
+      <div class="meta">
+        <span id="countPill" class="pill">Mostrando 0</span>
+        <span id="progressPill" class="pill">Progreso: 0 / 0</span>
+        <span id="statusLabel" class="status"></span>
+      </div>
+    </section>
+
+    <!-- VISTA: TARJETAS -->
+    <section id="cardsView" class="view">
+      <div id="cardsGrid" class="grid"></div>
+
+      <div id="emptyCards" class="empty hidden">
+        <div class="empty__title">No encontramos nada</div>
+        <div class="empty__desc">Prueba otra búsqueda o baja el filtro de nivel.</div>
+      </div>
+    </section>
+
+    <!-- VISTA: TABLA -->
+    <section id="tableView" class="view hidden">
+      <div class="table-wrapper">
+        <table id="csvTable">
+          <thead><tr id="headerRow"></tr></thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+
+      <div id="emptyTable" class="empty hidden">
+        <div class="empty__title">No encontramos filas</div>
+        <div class="empty__desc">Prueba otra búsqueda o ajusta filtros.</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL -->
+  <div id="modalOverlay" class="modalOverlay hidden" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal__head">
+        <div>
+          <div id="modalTitle" class="modal__title"></div>
+          <div id="modalMeta" class="modal__meta"></div>
+        </div>
+        <button id="modalClose" class="btn btn--ghost" type="button">Cerrar</button>
+      </div>
+
+      <div class="modal__body">
+        <div id="modalContent" class="modal__content"></div>
+        <div id="modalAction" class="modal__action"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">© 2025 Musicala</footer>
+  <script src="app.js"></script>
+</body>
+</html>
